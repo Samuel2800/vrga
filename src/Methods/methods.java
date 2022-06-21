@@ -10,13 +10,17 @@ import Items.PolygonBox;
 import Items.RectangularBox;
 import Items.item;
 
-public class methods {	
-	
+public class methods extends UserProgram{
+
+	public void prueba() {
+			 Double.valueOf(Height.getText());
+		 }
+
 	//this methods asks input form the user to add items to the order
 	public void addItems(HashMap<String, Object> order){
 		//this variable allows the user to keep adding items until his/her heart desires
 		boolean orderIsIncomplete = true;
-		
+
 		while(orderIsIncomplete) {
 			String itemName;
 			int amount;
@@ -26,47 +30,42 @@ public class methods {
 			double height;
 			double volume = 0;
 			String baseShape;
-			
+
 			//user introduces the name of the item
 			Scanner sc = new Scanner(System.in);
-			System.out.println("What is the product called?");
-			itemName = sc.nextLine();
+			itemName = ProductName.getText();
 			if(order.containsKey(itemName)) {
-				System.out.println("The item could not be added to the order because you already added one with the same name");
+				//prompter saying that the item has already been added
 				continue;
 			}
-			
+
 			//introduces the amount
-			System.out.println("How many of this would you like to include in this order?");
 			try {
-			amount = Integer.valueOf(sc.nextLine());
+			amount = Integer.valueOf(ProductQuantity.getText());
 			}
 			catch(Exception e){
-				System.out.println("Something went wrong, please try adding this item again");
+				//prompter saying something went wrong
 				continue;
 			}
-			
+
 			//the height
-			System.out.println("This program uses the metric system, please guive measurements in meters and weight in kilograms");
-			System.out.println("What is the height of the box?");
 			try {
-				height = Double.valueOf(sc.nextLine());
+				height = Double.valueOf(Height.getText());
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong, please try adding this item again");
+				//prompter saying something went wrong
 				continue;
 			}
-			
+
 			//the weight
-			System.out.println("How much does the item weight including the box?");
 			try {
-				weight = Double.valueOf(sc.nextLine());
+				weight = Double.valueOf(ProductWeight.getText());
 			}
 			catch(Exception e) {
-				System.out.println("Something went wrong, please try adding this item again");
+				//prompter saying something went wrong
 				continue;
 			}
-			
+
 			//the shape of the base
 			System.out.println("Please introducte one of the next options as the base of your box:");
 			System.out.println("Circle    Rectangle    Polygon");
@@ -77,7 +76,7 @@ public class methods {
 				System.out.println("This option isn't available at the moment");
 				continue;
 			}
-			
+
 			//according to the input of the user, the following objects are created and added into the order
 			//Cylinder
 			if(baseShape.equals(validShapes[0])) {
@@ -159,9 +158,9 @@ public class methods {
 					continue;
 				}
 			}
-			
+
 			System.out.println("New Item added successfully");
-			
+
 			//continue ordering
 			System.out.println("Do you want to continue with the order?(Y/N)");
 			if(sc.nextLine().toLowerCase().equals("n") ||sc.nextLine().toLowerCase().equals("no")) {
@@ -170,7 +169,7 @@ public class methods {
 			}
 		}
 	}
-	
+
 	//this method removes a specific item from the order
 	//the user must introduce the specific name of the object
 	public void removeItem(HashMap<String, Object> order, String item) {
@@ -181,9 +180,9 @@ public class methods {
 		catch(Exception e) {
 			System.out.println(item + " couldn't be found in the order");
 		}
-	}	
-	
-	//this method calculates the complete volume of the order by getting 
+	}
+
+	//this method calculates the complete volume of the order by getting
 	//the object's quantity and individual volume
 	public double orderVolume(HashMap<String, Object> order) {
 		double totalVolume = 0;
@@ -192,7 +191,7 @@ public class methods {
 		}
 		return totalVolume;
 	}
-	
+
 	//this method does the same form the last one but with volume
 	public double orderWeight(HashMap<String, Object> order) {
 		double totalWeight = 0;
@@ -201,7 +200,7 @@ public class methods {
 		}
 		return totalWeight;
 	}
-	
+
 	//this method just prints information from the selected object
 	public void printItemInfo(Object item) {
 		System.out.println("Item name: " + ((Items.item) item).getItemName());
@@ -210,7 +209,7 @@ public class methods {
 		System.out.println("Item's weight: " + ((Items.item) item).getWeight());
 		System.out.println("Item's shape: " + ((Items.item) item).getBaseShape());
 	}
-	
+
 	//this method prints the general information of the order or the specific information of each object
 	public void printOrderInfo(HashMap<String, Object> order) {
 		if(order.isEmpty()) {
@@ -223,7 +222,7 @@ public class methods {
 			System.out.println("1. Show general information about the order");
 			System.out.println("2. Show information about every item in the order");
 			option = sc.nextLine();
-			
+
 			if(option.trim().equals("1. Show general information about the order") || option.trim().equals("1") || option.trim().toLowerCase().equals("show general information about the order")) {
 				double volume = orderVolume(order);
 				double weight = orderWeight(order);
@@ -231,7 +230,7 @@ public class methods {
 				System.out.println("The total volume is: " + volume);
 				System.out.println("The total weight is: " + weight);
 			}
-			
+
 			else if(option.trim().equals("2. Show information about every item in the order") || option.trim().equals("2") || option.trim().toLowerCase().equals("show information about every item in the order")) {
 				for(Object value : order.values()) {
 					printItemInfo(value);
@@ -243,7 +242,7 @@ public class methods {
 			}
 		}
 	}
-	
+
 	//see explanation inside the method
 	public void bestShippingMethod(HashMap<String, Object> order, BigContainer biggie, SmallContainer smalls) {
 		double localVolume = orderVolume(order);
@@ -302,7 +301,7 @@ public class methods {
 	public double shippingCost(BigContainer biggie, SmallContainer smalls) {
 		return ((biggie.getAmount() * 1800) + ((smalls.getAmount()) * (smalls.getWeight() < 500 ? 1000 : 1200)));
 	}
-	
+
 	//this is the implementation of the other methods
 	public void app() {
 		HashMap<String, Object> order = new HashMap<String, Object>();
@@ -353,6 +352,6 @@ public class methods {
 			else {
 				System.out.println("Option not available");
 			}
-		}	
+		}
 	}
 }

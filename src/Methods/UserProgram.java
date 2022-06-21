@@ -1,6 +1,7 @@
 package Methods;
-
-import javax.swing.ButtonGroup;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
 
 public class UserProgram extends javax.swing.JFrame {
 
@@ -10,7 +11,7 @@ public class UserProgram extends javax.swing.JFrame {
 
 //method to configure JFrame
     @SuppressWarnings("unchecked")
-    private void initComponents() {
+    public void initComponents() {
 
 //create objects
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -44,6 +45,7 @@ public class UserProgram extends javax.swing.JFrame {
         Polygonal = new javax.swing.JRadioButton();
 
 
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hermod");
         setLocation(new java.awt.Point(500, 250));
@@ -54,7 +56,9 @@ public class UserProgram extends javax.swing.JFrame {
         label1.setFont(new java.awt.Font("Marker Felt", 0, 36));
         label1.setText("Welcome to Hermod");
 
-        jLabel2.setText("Please enter your product information very carefully");
+        //jLabel2.setText("Please enter your product information very carefully");
+        
+        jLabel2.setText("Please enter your measurements in meters");
 
         jLabel3.setText("Type your product name:");
 
@@ -125,6 +129,7 @@ public class UserProgram extends javax.swing.JFrame {
         Cylindrical.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CylindricalActionPerformed(evt);
+                //prueba();
             }
         });
 
@@ -261,6 +266,21 @@ public class UserProgram extends javax.swing.JFrame {
 
         pack();
     }
+    
+    
+    
+    public void actionPerformed(ActionEvent e) {
+    	if(e.getSource() == Cylindrical) {
+    		System.out.println("cylinder");
+    	}
+    	else if(e.getSource() == Rectangular) {
+    		System.out.println("rectangle");
+    	}
+    	else if(e.getSource() == Polygonal) {
+    		System.out.println("polygon");
+    	}
+    }
+    
 
     private void ProductNameActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -345,8 +365,9 @@ public class UserProgram extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UserProgram.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
 
-        // Create and display the form
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new UserProgram().setVisible(true);
@@ -355,34 +376,33 @@ public class UserProgram extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JCheckBox ContinueOrder;
-    private javax.swing.JRadioButton Cylindrical;
-    private javax.swing.JTextField Diameter;
-    private javax.swing.JTextField Height;
-    private javax.swing.JTextField Lenght;
-    private javax.swing.JCheckBox NoContinueOrder;
-    private javax.swing.JRadioButton Polygonal;
-    private javax.swing.JTextField ProductName;
-    private javax.swing.JTextField ProductQuantity;
-    private javax.swing.JTextField ProductWeight;
-    private javax.swing.JRadioButton Rectangular;
-    private javax.swing.JTextField Sides;
-    private javax.swing.JButton SummitButton;
-    private javax.swing.JTextField Wide;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private java.awt.Label label1;
-
+      private javax.swing.JCheckBox ContinueOrder;
+      protected javax.swing.JRadioButton Cylindrical;
+      protected javax.swing.JTextField Diameter;
+      protected javax.swing.JTextField Height;
+      protected javax.swing.JTextField Lenght;
+      private javax.swing.JCheckBox NoContinueOrder;
+      protected javax.swing.JRadioButton Polygonal;
+      protected javax.swing.JTextField ProductName;
+      protected javax.swing.JTextField ProductQuantity;
+      protected javax.swing.JTextField ProductWeight;
+      protected javax.swing.JRadioButton Rectangular;
+      protected javax.swing.JTextField Sides;
+      private javax.swing.JButton SummitButton;
+      protected javax.swing.JTextField Wide;
+      private javax.swing.ButtonGroup buttonGroup1;
+      private javax.swing.ButtonGroup buttonGroup2;
+      private javax.swing.JLabel jLabel1;
+      private javax.swing.JLabel jLabel10;
+      private javax.swing.JLabel jLabel11;
+      private javax.swing.JLabel jLabel12;
+      private javax.swing.JLabel jLabel2;
+      private javax.swing.JLabel jLabel3;
+      private javax.swing.JLabel jLabel4;
+      private javax.swing.JLabel jLabel5;
+      private javax.swing.JLabel jLabel6;
+      private javax.swing.JLabel jLabel7;
+      private javax.swing.JLabel jLabel8;
+      private javax.swing.JLabel jLabel9;
+      private java.awt.Label label1;
 }
