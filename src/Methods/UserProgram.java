@@ -1,10 +1,21 @@
 package Methods;
+
+//Group members Daniel Ramos, Samuel Pantoja, Gustavo Matamoros, Alejandro
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import javax.swing.JOptionPane;
+
+import Containers.BigContainer;
+import Containers.SmallContainer;
+import Items.CylindricalBox;
+import Items.PolygonBox;
+import Items.RectangularBox;
+import Items.item;
 
 public class UserProgram extends javax.swing.JFrame {
 
+//Constructor to impliment JFrame settings
     public UserProgram() {
         initComponents();
     }
@@ -43,21 +54,20 @@ public class UserProgram extends javax.swing.JFrame {
         Cylindrical = new javax.swing.JRadioButton();
         Rectangular = new javax.swing.JRadioButton();
         Polygonal = new javax.swing.JRadioButton();
+        ItemMap = new HashMap<String, Object>();
 
 
-
+//Principal Frame configuration
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hermod");
         setLocation(new java.awt.Point(500, 250));
         setType(java.awt.Window.Type.UTILITY);
 
+// setting text to the different labels
         jLabel1.setText("The best shipping company in the world ");
-
         label1.setFont(new java.awt.Font("Marker Felt", 0, 36));
         label1.setText("Welcome to Hermod");
 
-        //jLabel2.setText("Please enter your product information very carefully");
-        
         jLabel2.setText("Please enter your measurements in meters");
 
         jLabel3.setText("Type your product name:");
@@ -68,27 +78,34 @@ public class UserProgram extends javax.swing.JFrame {
 
         jLabel6.setText("Introduce your product weight:");
 
+// ActionListener for product name
         ProductName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProductNameActionPerformed(evt);
             }
-        });
+        }
+        );
 
+// ActionListener for ProductWeight
         ProductWeight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProductWeightActionPerformed(evt);
             }
-        });
+        }
+        );
 
+//setting text to label
         jLabel7.setText("Want order something else?");
 
+//adding to JCheckBox in a group to use them better
         buttonGroup2.add(ContinueOrder);
         ContinueOrder.setText("Yes");
         ContinueOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ContinueOrderActionPerformed(evt);
             }
-        });
+        }
+        );
 
         buttonGroup2.add(NoContinueOrder);
         NoContinueOrder.setText("No");
@@ -96,18 +113,23 @@ public class UserProgram extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NoContinueOrderActionPerformed(evt);
             }
-        });
+        }
+        );
 
+//setting configuration to summit
         SummitButton.setBackground(new java.awt.Color(204, 0, 153));
         SummitButton.setForeground(new java.awt.Color(255, 255, 255));
         SummitButton.setText("Summit");
         SummitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.SE_RESIZE_CURSOR));
         SummitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SummitButtonActionPerformed(evt);
+                SummitButtonActionPerformed(evt, ItemMap);
+                clear();
             }
-        });
+        }
+        );
 
+//setting text to sizes labels
         jLabel8.setText("Introduce Height:");
 
         jLabel9.setText("Introduce Lenght:");
@@ -118,20 +140,24 @@ public class UserProgram extends javax.swing.JFrame {
 
         jLabel12.setText("Sides of Products:");
 
+// ActionListener for sides
         Sides.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SidesActionPerformed(evt);
             }
-        });
+        }
+        );
 
+// adding shapes into  buttonGroup1
         buttonGroup1.add(Cylindrical);
         Cylindrical.setText("Cylindrical");
         Cylindrical.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CylindricalActionPerformed(evt);
-                //prueba();
+
+                }
             }
-        });
+        );
 
         buttonGroup1.add(Rectangular);
         Rectangular.setText("Rectangular");
@@ -139,7 +165,8 @@ public class UserProgram extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RectangularActionPerformed(evt);
             }
-        });
+        }
+        );
 
         buttonGroup1.add(Polygonal);
         Polygonal.setText("Polygonal");
@@ -147,8 +174,10 @@ public class UserProgram extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PolygonalActionPerformed(evt);
             }
-        });
+        }
+        );
 
+//positioning and adjusting the complements of JFrame
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,58 +295,249 @@ public class UserProgram extends javax.swing.JFrame {
 
         pack();
     }
-    
-    
-    
-    public void actionPerformed(ActionEvent e) {
-    	if(e.getSource() == Cylindrical) {
-    		System.out.println("cylinder");
-    	}
-    	else if(e.getSource() == Rectangular) {
-    		System.out.println("rectangle");
-    	}
-    	else if(e.getSource() == Polygonal) {
-    		System.out.println("polygon");
-    	}
-    }
-    
 
+//Action Performer for product name JTextField
     private void ProductNameActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
+//Action Performer for yes JCheckBox
     private void ContinueOrderActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
+//Action Performer for product weight JTextField
     private void ProductWeightActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void SummitButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
+// Summit button Action to sent products information to hash map and also catch errors
+    private void SummitButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<String, Object> map) {
+    	Cylindrical.setActionCommand("Cylindrical");
+    	Rectangular.setActionCommand("Rectangular");
+    	Polygonal.setActionCommand("Polygonal");
+    	ContinueOrder.setActionCommand("Yes");
+    	NoContinueOrder.setActionCommand("No");
+    	String name = ProductName.getText();
+    	int quantity = 0;
+    	double weight = 0;
+    	double height = 0;
+    	try {
+    		quantity = Integer.valueOf(ProductQuantity.getText());
+    		weight = Double.valueOf(ProductWeight.getText());
+    		height = Double.valueOf(Height.getText());
+    	}
+    	catch(Exception e) {
+    		JOptionPane.showMessageDialog(null, "Not valid input:\n Detalles: " + e.getMessage());
+    	}
+    	if(buttonGroup1.getSelection().getActionCommand().equals("Cylindrical")) {
+    		double diameter = 0;
+    		try {
+    			diameter = Double.valueOf(Diameter.getText());
+    		}
+    		catch(Exception e) {
+        		JOptionPane.showMessageDialog(null, "Not valid input:\n Detalles: " + e.getMessage());
+        	}
+    		Double.valueOf(Diameter.getText());
+    		CylindricalBox CB = new CylindricalBox(name, quantity, weight, diameter, 0, height, 0, "Cylinder");
+    		double volume = CB.calculateVolume(diameter, 0, height);
+    		if(volume > 75.587337) {
+        		JOptionPane.showMessageDialog(null, "The item can't be shipped\n This item Is bigger than our big container");
+    		}
+    		else {
+        		CB.setVolume(volume);
+        		addToMap(CB, name, map);
+    		}
+    	}
+    	else if(buttonGroup1.getSelection().getActionCommand().equals("Rectangular")) {
+    		double length = 0;
+    		double wide = 0;
+    		try {
+    			length = Double.valueOf(Lenght.getText());
+    			wide = Double.valueOf(Wide.getText());
+    		}
+    		catch(Exception e) {
+        		JOptionPane.showMessageDialog(null, "Not valid input:\n Detalles: " + e.getMessage());
+        	}
+    		RectangularBox RB = new RectangularBox(name, quantity, weight, length, wide, height, 0, "Rectangular");
+    		double volume = RB.calculateVolume(wide, length, height);
+    		if(volume > 75.587337) {
+        		JOptionPane.showMessageDialog(null, "The item can't be shipped\n This item Is bigger than our big container");
+    		}
+    		else {
+    			RB.setVolume(volume);
+        		addToMap(RB, name, map);
+    		}
+    	}
+    	else if(buttonGroup1.getSelection().getActionCommand().equals("Polygonal")) {
+    		double length = 0;
+    		double sidesn = 0;
+    		if(sidesn < 5) {
+        		JOptionPane.showMessageDialog(null, "A polygon should have more than 4 sides");
+    		}
+    		try {
+    			length = Double.valueOf(Lenght.getText());
+    			sidesn = Double.valueOf(Sides.getText());
+    		}
+    		catch(Exception e) {
+        		JOptionPane.showMessageDialog(null, "Not valid input:\n Detalles: " + e.getMessage());
+        	}
+    		PolygonBox PB = new PolygonBox(name, quantity, weight, length, sidesn, height, 0, "Polygon");
+    		double volume = PB.calculateVolume(length, sidesn, height);
+    		if(volume > 75.587337) {
+        		JOptionPane.showMessageDialog(null, "The item can't be shipped\n This item Is bigger than our big container");
+    		}
+    		else {
+    			PB.setVolume(volume);
+        		addToMap(PB, name, map);
+    		}
+    	}
+    	System.out.println(orderVolume(map));
+    	if(buttonGroup2.getSelection().getActionCommand().equals("Yes")){
+    		clear();
+    	}
+    	else if(buttonGroup2.getSelection().getActionCommand().equals("No")) {
+    		BigContainer biggie = new BigContainer(0);
+    		SmallContainer smalls = new SmallContainer(0);
+    		int bigAmount = 0;
+    		int smallAmount = 0;
+    		double cost = 0;
+    		bestShippingMethod(map, biggie, smalls);
+    		
+    		dispose();
+    		System.exit(0);
+    	}
     }
+    
 
+    // method to empty all JTextFields and button selections
+    private void clear() {
+    	ProductName.setText("");
+    	buttonGroup1.clearSelection();
+    	ProductQuantity.setText("");
+    	ProductWeight.setText("");
+    	Height.setText("");
+    	Lenght.setText("");
+    	Wide.setText("");
+    	Diameter.setText("");
+    	Sides.setText("");
+    	buttonGroup2.clearSelection();
+	}
+
+    // Method to put the items into a HashMap
+    private void addToMap(Object box, String name, HashMap<String, Object> map) {
+    	
+    	if(map.containsKey(name)) {
+    		JOptionPane.showMessageDialog(null, "Already added an Item witht the same name");
+    	}
+    	else {
+    		map.put(name, box);
+    	}
+    }
+    
+    // calculates the total volume of the order
+    private double orderVolume(HashMap<String, Object> map) {
+		double totalVolume = 0;
+		for(Object value : map.values()) {
+			totalVolume += (((item) value).getVolume() * ((item) value).getAmount());
+		}
+		return totalVolume;
+	}
+    
+    // calculates the total weight of the order
+    public double orderWeight(HashMap<String, Object> map) {
+		double totalWeight = 0;
+		for(Object value : map.values()) {
+			totalWeight += (((item) value).getWeight() * ((item) value).getAmount());
+		}
+		return totalWeight;
+	}
+    
+    // calculates the amount of each container needed for the shipment
+    public void bestShippingMethod(HashMap<String, Object> order, BigContainer biggie, SmallContainer smalls) {
+		double localVolume = orderVolume(order);
+		double localWeight = orderWeight(order);
+		double smallVolume = smalls.getContainerVolume();
+		double bigVolume = biggie.getContainerVolume();
+		//the counter variable stores the amount of objects from the order that have already been packed into a container
+		int counter = 0;
+		//when the packed items equals the items of the order, the program stops packing items
+		while(counter != order.size()){
+			double temp = 0;
+			if(localVolume > smallVolume) {
+				//every time a big container is added, the object's amount is updated
+				biggie.setAmount(biggie.getAmount() + 1);
+				//this loop goes through the order looking for objects that are not still in a container
+				for(String key : order.keySet()) {
+					Object value = order.get(key);
+					while(!(((item) value).getAmount() == 0) && (temp + ((item) value).getVolume()) < bigVolume && !(((item) value).getAmount() == 0)) {
+						temp += ((item) value).getVolume();
+						((item) value).setAmount(((item) value).getAmount() - 1);
+						localVolume -= ((item) value).getVolume();
+						localWeight -= ((item) value).getWeight();
+					}
+					if(((item) value).getAmount() == 0) {
+						counter += 1;
+						continue;
+					}
+				}
+			}
+			else {
+				//if there's the need, there will be only one small container
+				smalls.setAmount(smalls.getAmount() + 1);
+				smalls.setWeight(localWeight);
+				//same than the loop for the big container
+				for(String key : order.keySet()) {
+					Object value = order.get(key);
+					while(!(((item) value).getAmount() == 0) && !(((item) value).getAmount() == 0)) {
+						temp += ((item) value).getVolume();
+						((item) value).setAmount(((item) value).getAmount() - 1);
+						localVolume -= ((item) value).getVolume();
+					}
+					if(((item) value).getAmount() == 0) {
+						counter += 1;
+						continue;
+					}
+				}
+			}
+		}
+		double cost = shippingCost(biggie, smalls);
+		int smallAmount = smalls.getAmount();
+		int bigAmount = biggie.getAmount();
+		System.out.println("big containers: " + bigAmount);
+		System.out.println("small containers: " + smallAmount);
+		System.out.println("cost: " + cost);
+		System.out.println("-------------------------------");
+	}
+
+    
+    // calculates the price of the shipment according to the number and types of containers used
+    public double shippingCost(BigContainer biggie, SmallContainer smalls) {
+		return ((biggie.getAmount() * 1800) + ((smalls.getAmount()) * (smalls.getWeight() < 500 ? 1000 : 1200)));
+	}
+
+    //Action Performer for sides JTextField
     private void SidesActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
-
+//Action Performer for Cylindrical JRadioButton
     private void CylindricalActionPerformed(java.awt.event.ActionEvent evt) {
         CylOptions();
-    }
 
+    }
+//Action Performer for rectangular JRadioButton
     private void RectangularActionPerformed(java.awt.event.ActionEvent evt) {
         RecOptions();
     }
-
+//Action Performer for polygonal JRadioButton
     private void PolygonalActionPerformed(java.awt.event.ActionEvent evt) {
         PolOptions();
     }
-
+//Action Performer for "no" JCheckBox
     private void NoContinueOrderActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
-
+//method for allowing just Cylindrical options
     public void CylOptions(){
 
         Sides.setEnabled(false);
@@ -327,9 +547,9 @@ public class UserProgram extends javax.swing.JFrame {
         Diameter.setEnabled(true);
 
     }
-
+//method for allowing just Rectangular options
     public void RecOptions(){
-
+    	
         Sides.setEnabled(false);
         Height.setEnabled(true);
         Lenght.setEnabled(true);
@@ -337,7 +557,7 @@ public class UserProgram extends javax.swing.JFrame {
         Diameter.setEnabled(false);
 
     }
-
+//method for allowing just polygonal options
     public void PolOptions(){
         Sides.setEnabled(true);
         Height.setEnabled(true);
@@ -365,14 +585,14 @@ public class UserProgram extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UserProgram.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
+        // Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new UserProgram().setVisible(true);
             }
-        });
+        }
+        );
     }
 
     // Variables declaration - do not modify
@@ -405,4 +625,5 @@ public class UserProgram extends javax.swing.JFrame {
       private javax.swing.JLabel jLabel8;
       private javax.swing.JLabel jLabel9;
       private java.awt.Label label1;
+      private HashMap<String, Object> ItemMap;
 }
