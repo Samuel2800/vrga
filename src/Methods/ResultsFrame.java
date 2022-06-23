@@ -1,63 +1,47 @@
 package Methods;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+import Containers.BigContainer;
+import Containers.SmallContainer;
 import Items.item;
 import Methods.UserProgram;
 
 public class ResultsFrame extends javax.swing.JFrame {
 
-    public ResultsFrame() {
-        initComponents();        
+    public ResultsFrame(HashMap<String, Object> map) {
+        initComponents(map);        
     }
-    
-    String a = "eres puto";
 
-    private void initComponents() {
+    private void initComponents(HashMap<String, Object> map) {
         jScrollPane1 = new javax.swing.JScrollPane();  
         ShowResult = new javax.swing.JLabel();
+        BigResult = new JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Object value = new Object();
+        bigContainer = new BigContainer(0);
+        smallContainer = new SmallContainer(0);
+        UserProgram UP = new UserProgram();
         
+        UP.bestShippingMethod(map, bigContainer, smallContainer);
+        double cost = UP.shippingCost(bigContainer, smallContainer);
         
-        
-        //javax.swing.JLabel jLabelName = new javax.swing.JLabel();
-    	//javax.swing.JLabel jLabelAmount = new javax.swing.JLabel();
-    	//javax.swing.JLabel jLabelVolume = new javax.swing.JLabel();
-    	//javax.swing.JLabel jLabelWeight = new javax.swing.JLabel();
-    	//javax.swing.JLabel jLabelBaseShape = new javax.swing.JLabel();
-    	//javax.swing.JLabel jLabelSeparate = new javax.swing.JLabel();
-    	
-    	//jLabelName.setText(((Items.item) value).getItemName());
-    	//jLabelAmount.setText(Integer.toString(((Items.item) value).getAmount()));
-    	//jLabelVolume.setText(Double.toString(((Items.item) value).getVolume()));
-    	//jLabelWeight.setText(Double.toString(((Items.item) value).getWeight()));
-    	//jLabelBaseShape.setText(((Items.item) value).getBaseShape());
-    	//jLabelSeparate.setText("-----------------------------------------------");
-    	
-    	//jScrollPane1.add(jLabelName);
-    	//jScrollPane1.add(jLabelAmount);
-    	//jScrollPane1.add(jLabelVolume);
-    	//jScrollPane1.add(jLabelWeight);
-    	//jScrollPane1.add(jLabelBaseShape);
-    	//jScrollPane1.add(jLabelSeparate);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ResultsFrame");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        ShowResult.setToolTipText("");
-        ShowResult.setText(a);
-        
-		/*
-		 * for(int i = 0; i < 5; i++) { ShowResult.setText(Integer.toString(i)); }
-		 */
+        ShowResult.setText("Big Containers used: " + Integer.toString(bigContainer.getAmount())
+        		+ "\n Small Containers used: " + Integer.toString(smallContainer.getAmount())
+        		+ "\n Cost of the shipment: $" + Double.toString(cost));
+
         jScrollPane1.setViewportView(ShowResult);
+        
 
         jLabel1.setFont(new java.awt.Font("Marker Felt", 1, 18));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -98,27 +82,6 @@ public class ResultsFrame extends javax.swing.JFrame {
 
         pack();
     }
-    //Shows information about the information for an item:
-    public void showOrderInfo(HashMap<String, Object> map) {
-    	System.out.println(map.size());
-    		for(Object value : map.values()) {
-    			showItemInfo(value);
-    		}
-	}
-    
-    //Show information about an item
-    public void showItemInfo(Object value) {
-    		JLabel labelName = new JLabel();
-    		JLabel labelVolume = new JLabel();
-    		
-    		labelName.setToolTipText("");
-    		labelName.setText(((Items.item) value).getItemName());
-    		labelName.setVisible(true);
-    		System.out.println(((Items.item) value).getItemName());
-    		//labelVolume.setToolTipText("");
-    		labelVolume.setText(Double.toString(((item) value).getVolume()));
-    	
-    }
 
     public void ShowResultsFrame(HashMap<String, Object> map) {
 
@@ -141,8 +104,7 @@ public class ResultsFrame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResultsFrame().setVisible(true);
-            	showOrderInfo(map);
+                new ResultsFrame(map).setVisible(true);
             }
         }
         );
@@ -153,5 +115,9 @@ public class ResultsFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel ShowResult;
+    private JLabel BigResult;
+    private BigContainer bigContainer;
+    private SmallContainer smallContainer;
+    
 
 }

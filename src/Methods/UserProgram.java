@@ -315,7 +315,7 @@ public class UserProgram extends javax.swing.JFrame {
 
 // Summit button Action to sent products information to hash map and also catch errors
     private void SummitButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<String, Object> map) {
-    	ResultsFrame o = new ResultsFrame();
+    	ResultsFrame o = new ResultsFrame(ItemMap);
     	
     	Cylindrical.setActionCommand("Cylindrical");
     	Rectangular.setActionCommand("Rectangular");
@@ -402,7 +402,6 @@ public class UserProgram extends javax.swing.JFrame {
     		//int smallAmount = 0;
     		//double cost = 0;
     		//showOrderInfo(map);
-    		bestShippingMethod(map, biggie, smalls);
     		
     		dispose();
     		//System.exit(0);
@@ -429,7 +428,7 @@ public class UserProgram extends javax.swing.JFrame {
     private void addToMap(Object box, String name, HashMap<String, Object> map) {
     	
     	if(map.containsKey(name)) {
-    		JOptionPane.showMessageDialog(null, "Already added an Item witht the same name");
+    		JOptionPane.showMessageDialog(null, "Already added an Item with the same name");
     	}
     	else {
     		map.put(name, box);
@@ -502,23 +501,6 @@ public class UserProgram extends javax.swing.JFrame {
 				}
 			}
 		}
-		double cost = shippingCost(biggie, smalls);
-		int smallAmount = smalls.getAmount();
-		int bigAmount = biggie.getAmount();
-    	javax.swing.JLabel jLabelCost = new javax.swing.JLabel();
-    	javax.swing.JLabel jLabelSmall = new javax.swing.JLabel();
-    	javax.swing.JLabel jLabelBig = new javax.swing.JLabel();
-    	
-    	jLabelCost.setText(Double.toString(cost));
-    	jLabelSmall.setText(Integer.toString(smallAmount));
-    	jLabelBig.setText(Integer.toString(bigAmount));
-
-
-
-		//System.out.println("big containers: " + bigAmount);
-		//System.out.println("small containers: " + smallAmount);
-		//System.out.println("cost: " + cost);
-		//System.out.println("-------------------------------");
 	}
     
 
