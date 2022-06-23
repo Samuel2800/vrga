@@ -1,5 +1,6 @@
 package Methods;
 
+import java.awt.Component;
 //Group members Daniel Ramos, Samuel Pantoja, Gustavo Matamoros, Alejandro
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import Items.CylindricalBox;
 import Items.PolygonBox;
 import Items.RectangularBox;
 import Items.item;
+import Methods.ResultsFrame;
 
 public class UserProgram extends javax.swing.JFrame {
 
@@ -313,6 +315,8 @@ public class UserProgram extends javax.swing.JFrame {
 
 // Summit button Action to sent products information to hash map and also catch errors
     private void SummitButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<String, Object> map) {
+    	ResultsFrame o = new ResultsFrame();
+    	
     	Cylindrical.setActionCommand("Cylindrical");
     	Rectangular.setActionCommand("Rectangular");
     	Polygonal.setActionCommand("Polygonal");
@@ -370,42 +374,39 @@ public class UserProgram extends javax.swing.JFrame {
     		}
     	}
     	else if(buttonGroup1.getSelection().getActionCommand().equals("Polygonal")) {
-    		double length = 0;
-    		double sidesn = 0;
-    		if(sidesn < 5) {
+    		double length = Double.valueOf(Lenght.getText());
+    		double sidesn = Double.valueOf(Sides.getText());
+    		if(sidesn <= 4) {
         		JOptionPane.showMessageDialog(null, "A polygon should have more than 4 sides");
     		}
-    		try {
-    			length = Double.valueOf(Lenght.getText());
-    			sidesn = Double.valueOf(Sides.getText());
-    		}
-    		catch(Exception e) {
-        		JOptionPane.showMessageDialog(null, "Not valid input:\n Detalles: " + e.getMessage());
-        	}
-    		PolygonBox PB = new PolygonBox(name, quantity, weight, length, sidesn, height, 0, "Polygon");
-    		double volume = PB.calculateVolume(length, sidesn, height);
-    		if(volume > 75.587337) {
-        		JOptionPane.showMessageDialog(null, "The item can't be shipped\n This item Is bigger than our big container");
-    		}
     		else {
-    			PB.setVolume(volume);
-        		addToMap(PB, name, map);
+    			PolygonBox PB = new PolygonBox(name, quantity, weight, length, sidesn, height, 0, "Polygon");
+        		double volume = PB.calculateVolume(length, sidesn, height);
+        		if(volume > 75.587337) {
+            		JOptionPane.showMessageDialog(null, "The item can't be shipped\n This item Is bigger than our big container");
+        		}
+        		else {
+        			PB.setVolume(volume);
+            		addToMap(PB, name, map);
+        		}
     		}
+    		
     	}
-    	System.out.println(orderVolume(map));
     	if(buttonGroup2.getSelection().getActionCommand().equals("Yes")){
     		clear();
     	}
     	else if(buttonGroup2.getSelection().getActionCommand().equals("No")) {
     		BigContainer biggie = new BigContainer(0);
     		SmallContainer smalls = new SmallContainer(0);
-    		int bigAmount = 0;
-    		int smallAmount = 0;
-    		double cost = 0;
+    		//int bigAmount = 0;
+    		//int smallAmount = 0;
+    		//double cost = 0;
+    		//showOrderInfo(map);
     		bestShippingMethod(map, biggie, smalls);
     		
     		dispose();
-    		System.exit(0);
+    		//System.exit(0);
+    		o.ShowResultsFrame(map);
     	}
     }
     
@@ -504,11 +505,23 @@ public class UserProgram extends javax.swing.JFrame {
 		double cost = shippingCost(biggie, smalls);
 		int smallAmount = smalls.getAmount();
 		int bigAmount = biggie.getAmount();
-		System.out.println("big containers: " + bigAmount);
-		System.out.println("small containers: " + smallAmount);
-		System.out.println("cost: " + cost);
-		System.out.println("-------------------------------");
+    	javax.swing.JLabel jLabelCost = new javax.swing.JLabel();
+    	javax.swing.JLabel jLabelSmall = new javax.swing.JLabel();
+    	javax.swing.JLabel jLabelBig = new javax.swing.JLabel();
+    	
+    	jLabelCost.setText(Double.toString(cost));
+    	jLabelSmall.setText(Integer.toString(smallAmount));
+    	jLabelBig.setText(Integer.toString(bigAmount));
+
+
+
+		//System.out.println("big containers: " + bigAmount);
+		//System.out.println("small containers: " + smallAmount);
+		//System.out.println("cost: " + cost);
+		//System.out.println("-------------------------------");
 	}
+    
+
 
     
     // calculates the price of the shipment according to the number and types of containers used
@@ -625,5 +638,5 @@ public class UserProgram extends javax.swing.JFrame {
       private javax.swing.JLabel jLabel8;
       private javax.swing.JLabel jLabel9;
       private java.awt.Label label1;
-      private HashMap<String, Object> ItemMap;
+      protected HashMap<String, Object> ItemMap;
 }
