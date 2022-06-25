@@ -190,7 +190,7 @@ public class UserProgram extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel1))
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(142, 142, 142))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,11 +436,12 @@ public class UserProgram extends javax.swing.JFrame {
     }
     
     // calculates the total volume of the order
-    private double orderVolume(HashMap<String, Object> map) {
+    public double orderVolume(HashMap<String, Object> map) {
 		double totalVolume = 0;
 		for(Object value : map.values()) {
 			totalVolume += (((item) value).getVolume() * ((item) value).getAmount());
 		}
+		System.out.println(totalVolume);
 		return totalVolume;
 	}
     
